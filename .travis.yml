@@ -1,4 +1,6 @@
-before_install: sudo apt-get install libc-dev-i386 g++-multilib python2
+before_install:
+    - sudo dpkg 
+    - sudo apt-get install g++-multilib python2.7
 matrix:
   env:
     - arch=arm
