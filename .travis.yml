@@ -1,6 +1,10 @@
 install: apt-get install libc-dev-i386 g++-multilib python2
 matrix:
-  env: arch=arm arch=aarch64 arch=x86 arch=x86_64
+  env:
+    - arch=arm
+    - arch=aarch64
+    - arch=x86
+    - arch=x86_64
 script: "skipzlib=no ./build.sh"
 deploy:
   provider: releases
