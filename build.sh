@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-scriptdir=`dirname $0`
+scriptdir="$(cd "$(dirname "$0")"; pwd)/$(basename "$0")"
 topdir="`pwd`/android_build"
 
 googlebaseurl='https://android.googlesource.com/platform'
@@ -77,9 +77,9 @@ if [[ "$skipbenches" == 'yes' ]]
     find bionic -type d -name 'benchmarks' -exec rm -r {} +
 fi
 
-for patch in $scriptdir/main.mk.patch
+for patch in "$scriptdir/*.patch"
   do
-    patch -f -p1 < $patch || true
+    patch -f -p1 < "$patch" || true
 done
 
 fi
