@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-scriptdir="$(cd "$(dirname "$0")"; pwd)/$(basename "$0")"
+scriptdir="$(cd "$(dirname "$0")"; pwd)"
 topdir="`pwd`/android_build"
 
 googlebaseurl='https://android.googlesource.com/platform'
