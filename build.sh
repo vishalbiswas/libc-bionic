@@ -14,6 +14,8 @@ sources=('bionic' 'libnativehelper' 'build' 'build/kati' 'system/core' 'system/e
 : ${skipndk:='no'}
 # benchmarks are broken right now
 : ${skipbenches:='yes'}
+# zlib is not required for building
+: ${skipzlib:='yes'}
 ndkarch=$arch
 gccarch=$arch
 luncharch=$arch
@@ -43,8 +45,8 @@ download_from_git () {
     cd "$topdir/$1"
 
     git init -q
-    git remote add origin $googlebaseurl/$1
-    git fetch --depth 1 origin $2 -q 
+    git remote add origin "$googlebaseurl/$1"
+    git fetch --depth 1 origin "$2" -q 
     git reset --hard FETCH_HEAD -q
 
     cd "$topdir"
@@ -53,54 +55,66 @@ download_from_git () {
 if [ "$skipsrc" == 'no' ]
   then
 
-mkdir -p $topdir
-cd $topdir
+mkdir -p "$topdir"
+cd "$topdir"
 
 
 for source in "${sources[@]}"
   do
-    _buildref=$buildref
+    _buildref="$buildref"
     if [ "$source" == 'external/googletest' ]
       then
         _buildref='master'
     fi
 
-        download_from_git $source $_buildref
+        download_from_git "$source" "$_buildref"
 done
 
-cd $topdir
+cd "$topdir"
 
 if [[ "$skipbenches" == 'yes' ]]
   then
     find bionic -type d -name 'benchmarks' -exec rm -r {} +
 fi
 
-echo 'include build/core/main.mk' > Makefile
-
 fi
 
 
-if [ $skipndk == 'no' ]
+if [ "$skipndk" == 'no' ]
   then
-        _buildref=$buildref
+        _buildref="$buildref"
         for tool in "${prebuilts[@]}"
           do
-            download_from_git $tool $_buildref
+            download_from_git "$tool" "$_buildref"
         done
 rm -r prebuilts/misc/common/android-support-test || true
 fi
 
 source build/envsetup.sh
 export JAVA_NOT_REQUIRED=true
-lunch aosp_$ndkarch-eng > /dev/null
+lunch "aosp_$ndkarch-eng" > /dev/null
 
-cd bionic
+if [ "$skipzlib" == 'no' ]
+  then
+    download_from_git 'external/zlib' "$buildref"
+    cd "$topdir/external/zlib"
+    mma -j5
+fi
+
+cd "$topdir/bionic"
 mma -j5
 
-outdir=$topdir/out/target/product/generic
-test -d "${outdir}_$ndkarch" && outdir+=_$ndkarch
+outdir="$topdir/out/target/product/generic"
+test -d "${outdir}_$ndkarch" && outdir+="_$ndkarch"
 
-cd $outdir
-tar -cJf $topdir/../bionic_${arch}_${buildref}.tar.xz system
+cd "$outdir"
+if [ "$skipzlib" == 'no' ]
+  then
+    outfile="$topdir/../bionic_${arch}_${buildref}_zlib.tar.xz"
+else
+    outfile="$topdir/../bionic_${arch}_${buildref}.tar.xz"
+fi    
+
+tar -cJf "$outfile" data system
 
 set +e
