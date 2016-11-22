@@ -77,7 +77,7 @@ if [[ "$skipbenches" == 'yes' ]]
     find bionic -type d -name 'benchmarks' -exec rm -r {} +
 fi
 
-for patch in "$scriptdir/*.patch"
+for patch in $scriptdir/*.patch
   do
     patch -f -p1 < "$patch" || true
 done
