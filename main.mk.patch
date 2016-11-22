@@ -1,5 +1,5 @@
---- ../main.mk	2016-11-22 19:23:03.652909405 +0530
-+++ build/core/main.mk	2016-11-22 19:24:04.205584985 +0530
+--- ./build/core/main.mk	2016-11-22 19:23:03.652909405 +0530
++++ ./build/core/main.mk	2016-11-22 19:24:04.205584985 +0530
 @@ -136,89 +136,6 @@
  $(error Directory names containing spaces not supported)
  endif
