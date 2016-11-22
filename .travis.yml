@@ -1,5 +1,4 @@
 before_install:
-    - sudo dpkg 
     - sudo apt-get install g++-multilib python2.7
 matrix:
   env:
