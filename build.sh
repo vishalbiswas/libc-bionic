@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-scriptdir=`dirname $0`
+scriptdir="$(cd "$(dirname "$0")"; pwd)"
 topdir="`pwd`/android_build"
 
 googlebaseurl='https://android.googlesource.com/platform'
@@ -77,6 +77,11 @@ if [[ "$skipbenches" == 'yes' ]]
     find bionic -type d -name 'benchmarks' -exec rm -r {} +
 fi
 
+for patch in $scriptdir/*.patch
+  do
+    patch -f -p1 < "$patch" || true
+done
+
 fi
 
 
@@ -91,7 +96,6 @@ rm -r prebuilts/misc/common/android-support-test || true
 fi
 
 source build/envsetup.sh
-export JAVA_NOT_REQUIRED=true
 lunch "aosp_$ndkarch-eng" > /dev/null
 
 if [ "$skipzlib" == 'no' ]
