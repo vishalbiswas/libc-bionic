@@ -96,18 +96,17 @@ rm -r prebuilts/misc/common/android-support-test || true
 fi
 
 source build/envsetup.sh
-export JAVA_NOT_REQUIRED=true
 lunch "aosp_$ndkarch-eng" > /dev/null
 
 if [ "$skipzlib" == 'no' ]
   then
     download_from_git 'external/zlib' "$buildref"
     cd "$topdir/external/zlib"
-    mma -j5
+    mma -j5 JAVA_NOT_REQUIRED=true
 fi
 
 cd "$topdir/bionic"
-mma -j5
+mma -j5 JAVA_NOT_REQUIRED=true
 
 outdir="$topdir/out/target/product/generic"
 test -d "${outdir}_$ndkarch" && outdir+="_$ndkarch"
