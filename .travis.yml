@@ -2,6 +2,7 @@ before_install:
     - sudo apt-get install g++-multilib python2.7
 script: "skipzlib=no ./build.sh"
 deploy:
+  skip_cleanup: true
   provider: releases
   api_key:
     secure: uoOHapLDTkp13PAbCfSHc6kE34JZniJEi3xMAN1IHZh7Ttr2QybLNBZme1UBu1YnLqMwHPT4YuBhcBkFpFaVK5YGU8ixEG4dGtsSKNe6ZyRis8rGePPywiRf8RlXaMHsVxceTiHNG7ln8dB4E0t3hAYLMQJmK8rkjCfFVTzZv0SNtdzMAyPqVDvmQq0QPVWFJ4dxi1+xsre/63dSmYbNh8xGw+fP1dTocDW/GQyEkPujdmQdZG4sFx+UZC4Y44XQyK38Y5BO2FCY7iPm46+kwHu3q8JZXXgwD0mnMgfZW2ZE/yJSmvqPUc4Er1xboMu/XSuXK9KKLZJ76vnx3RlcUSNOVTO5/lKg4i0l+/Zb9/PwYKDfDbfaBta4HYBgJGxHPJJDZvKczYlBEQaT3qLiydHy+sYSy2CsKRCcNhZ82ulI/5ABPtH/nji+0rVkN7Z6M+w51m9BY14JyLup83GwrBUmvfSi5hikfeMWhwVDvRY5kfdSKpAFy2UjDb0M+6aC4hSEc7nzH7VnL6ZEQu9DF0WsQ6/VVXFnUuNR5BpXJsH77fJBj87x3yeottIKgDzYUsIVx6PjY6YPrgpLo3EqB1KO0Pxckey+6WzRcJ9iWVzHVJ/24wwKap0Mqfdn+w8XBO2CwBdT5bKwZeN0haf5a08M8sy19woUtYRb+4alcV0=
