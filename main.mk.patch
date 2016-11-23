@@ -1,0 +1,11 @@
+--- ./build/core/main.mk	2016-11-23 23:00:18.051392631 +0530
++++ ../main.mk	2016-11-23 23:19:48.349811417 +0530
+@@ -58,7 +58,7 @@
+ BUILD_SYSTEM := $(TOPDIR)build/core
+ 
+ # Ensure JAVA_NOT_REQUIRED is not set externally.
+-JAVA_NOT_REQUIRED := false
++JAVA_NOT_REQUIRED := true
+ 
+ # This is the default target.  It must be the first declared target.
+ .PHONY: droid
