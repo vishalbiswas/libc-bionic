@@ -102,11 +102,11 @@ if [ "$skipzlib" == 'no' ]
   then
     download_from_git 'external/zlib' "$buildref"
     cd "$topdir/external/zlib"
-    mma -j5 JAVA_NOT_REQUIRED=true
+    mma -j5 -e JAVA_NOT_REQUIRED=true
 fi
 
 cd "$topdir/bionic"
-mma -j5 JAVA_NOT_REQUIRED=true
+mma -j5 -e JAVA_NOT_REQUIRED=true
 
 outdir="$topdir/out/target/product/generic"
 test -d "${outdir}_$ndkarch" && outdir+="_$ndkarch"
