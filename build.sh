@@ -14,8 +14,7 @@ sources=('bionic' 'libnativehelper' 'build' 'build/kati' 'system/core' 'system/e
 : ${skipndk:='no'}
 # benchmarks are broken right now
 : ${skipbenches:='yes'}
-# zlib is not required for building
-: ${skipzlib:='yes'}
+: ${skipzlib:='no'}
 ndkarch=$arch
 gccarch=$arch
 luncharch=$arch
