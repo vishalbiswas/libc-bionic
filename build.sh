@@ -34,17 +34,16 @@ prebuilts=( "prebuilts/gcc/linux-x86/$gccarch/$abi-$gccver" "prebuilts/gcc/linux
             'prebuilts/clang/host/linux-x86' 'prebuilts/gcc/linux-x86/host/x86_64-w64-mingw32-4.8' 'prebuilts/ninja/linux-x86' 'prebuilts/misc')
 
 download_from_git () {
-    echo "downloading $1"
+    echo "Cloning $1"
 
-    if [ -d "$topdir/$1" ]
-      then
-        rm -rf "$topdir/$1"
+    if [ ! -d "$topdir/$1" ]; then
+      mkdir -p "$topdir/$1"
+      cd "$topdir/$1"
+      git init -q
+      git remote add origin "$googlebaseurl/$1"
     fi
-    mkdir -p "$topdir/$1"
-    cd "$topdir/$1"
 
-    git init -q
-    git remote add origin "$googlebaseurl/$1"
+    cd "$topdir/$1"
     git fetch --depth 1 origin "$2" -q 
     git reset --hard FETCH_HEAD -q
 
