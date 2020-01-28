@@ -14,14 +14,19 @@ sources=('bionic' 'libnativehelper' 'build' 'build/kati' 'system/core' 'system/e
 : ${skipndk:='no'}
 # benchmarks are broken right now
 : ${skipbenches:='yes'}
-# zlib is not required for building
-: ${skipzlib:='yes'}
+: ${skipzlib:='no'}
 ndkarch=$arch
 gccarch=$arch
 luncharch=$arch
 gccver=4.9
 
+echo "==========="
+echo "libc-bionic"
+echo "==========="
+echo
+
 abi="$arch-linux-android"
+echo "Target ABI: $abi"
 
 case $arch in
     x86) abi='x86_64-linux-android'; ndkarch='x86_64';;
@@ -35,17 +40,16 @@ prebuilts=( "prebuilts/gcc/linux-x86/$gccarch/$abi-$gccver" "prebuilts/gcc/linux
             'prebuilts/clang/host/linux-x86' 'prebuilts/gcc/linux-x86/host/x86_64-w64-mingw32-4.8' 'prebuilts/ninja/linux-x86' 'prebuilts/misc')
 
 download_from_git () {
-    echo "downloading $1"
+    echo "Cloning $1"
 
-    if [ -d "$topdir/$1" ]
-      then
-        rm -rf "$topdir/$1"
+    if [ ! -d "$topdir/$1" ]; then
+      mkdir -p "$topdir/$1"
+      cd "$topdir/$1"
+      git init -q
+      git remote add origin "$googlebaseurl/$1"
     fi
-    mkdir -p "$topdir/$1"
-    cd "$topdir/$1"
 
-    git init -q
-    git remote add origin "$googlebaseurl/$1"
+    cd "$topdir/$1"
     git fetch --depth 1 origin "$2" -q 
     git reset --hard FETCH_HEAD -q
 
