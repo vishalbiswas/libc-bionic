@@ -20,7 +20,13 @@ gccarch=$arch
 luncharch=$arch
 gccver=4.9
 
+echo "==========="
+echo "libc-bionic"
+echo "==========="
+echo
+
 abi="$arch-linux-android"
+echo "Target ABI: $abi"
 
 case $arch in
     x86) abi='x86_64-linux-android'; ndkarch='x86_64';;
