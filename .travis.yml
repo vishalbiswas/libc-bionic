@@ -1,6 +1,6 @@
 before_install:
     - sudo apt-get install g++-multilib python2.7
-script: "skipzlib=no ./build.sh"
+script: "skiputil=no ./build.sh"
 deploy:
   skip_cleanup: true
   provider: releases
